@@ -1,0 +1,5 @@
+# managed by tornae-tfmodules-platform/modules/github//modules/repo-files
+# default owners: the tenant team (holds write)
+* @tornaefake/fake1live
+# the owners file itself is owned by the same team (self-protection)
+/.github/CODEOWNERS @tornaefake/fake1live
