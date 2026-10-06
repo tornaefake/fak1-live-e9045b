@@ -1,4 +1,8 @@
+# managed by tornae-tfmodules-platform (extend per language)
+.DS_Store
+*.tfstate*
+.terraform/
+.terragrunt-cache/
 __pycache__/
-*.pyc
-.pytest_cache/
-.venv/
+node_modules/
+*.log
