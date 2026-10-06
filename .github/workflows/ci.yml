@@ -1,29 +1,17 @@
+# managed by tornae-tfmodules-platform/modules/github//modules/repo-files
+# THIN caller — do not add steps here; extend shared-workflows ci-python.yml instead
 name: ci
 on:
+  pull_request:
   push:
     branches: [main]
-    tags: ["v*"]
-  pull_request:
 permissions:
   contents: read
-  id-token: write  # shared-workflows Vault OIDC Harbor login
+  security-events: write
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
-  test:
-    runs-on: [self-hosted, Linux, X64, ci]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
-      - run: pip install -r requirements.txt
-      - run: pytest -q
-  build:
-    if: github.event_name == 'push'
-    uses: galan-projects/shared-workflows/.github/workflows/docker-build.yml@main
-    with:
-      image_name: tenant-python-app          # per-tenant: rename + create the Harbor project
-      harbor_project: tenant1
-      dockerfile: Dockerfile
-      context: .
-      push_images: auto
-      enable_cache: true
-    secrets: inherit
+  ci:
+    uses: galan-projects/shared-workflows/.github/workflows/ci-python.yml@main
+
